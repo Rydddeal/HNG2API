@@ -46,7 +46,7 @@ const digitSum = (num) =>
     .reduce((sum, digit) => sum + Number(digit), 0);
 
 
-app.get("/api/classify-number", async (req, res) => {
+app.get("/api/classify-number?number=371.", async (req, res) => {
   const { number } = req.query;
 
   if (!number || isNaN(number)) {
