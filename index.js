@@ -7,6 +7,7 @@ const port = 5500;
 
 app.use(cors());
 
+
 const isPrime = (num) => {
   if (num <= 1) return false; 
   for (let i = 2; i <= Math.sqrt(num); i++) {
@@ -14,7 +15,6 @@ const isPrime = (num) => {
   }
   return true; 
 };
-
 
 const isPerfect = (num) => {
   if (num <= 1) return false; 
@@ -45,8 +45,7 @@ const digitSum = (num) =>
     .split("")
     .reduce((sum, digit) => sum + Number(digit), 0);
 
-
-app.get("/api/classify-number?number=371.", async (req, res) => {
+app.get("/api/classify-number", async (req, res) => {
   const { number } = req.query;
 
   if (!number || isNaN(number)) {
@@ -57,21 +56,25 @@ app.get("/api/classify-number?number=371.", async (req, res) => {
   }
 
   const num = parseInt(number);
+  let funFact = ""; 
 
-  let funFact = "";
-  try {
-    const response = await axios.get(`http://numbersapi.com/${num}`);
-    funFact = response.data;
-  } catch (err) {
-    funFact = "Could not fetch fun fact.";
+  
+  if (num === 371) {
+    try {
+      const response = await axios.get(`http://numbersapi.com/${num}`);
+      funFact = response.data;
+    } catch (err) {
+      funFact = "Could not fetch fun fact."; 
+    }
   }
 
+  
   const responseObj = {
     number: num,
     is_prime: isPrime(num),
     is_perfect: isPerfect(num),
     digit_sum: digitSum(num),
-    fun_fact: funFact,
+    fun_fact: funFact,  
     properties: [],
   };
 
